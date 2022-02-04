@@ -1,3 +1,4 @@
+#[derive(Debug)]
 struct Rectangle {
     width: u32,
     height: u32,
@@ -10,6 +11,8 @@ fn main() {
         "사각형의 면적: {} 제곱 픽셀",
         area(&rect1)
     );
+
+    println!("rect1: {:?}", rect1);
 }
 
 fn area( rectangle: &Rectangle) -> u32 {
