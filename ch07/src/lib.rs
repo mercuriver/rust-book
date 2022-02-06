@@ -27,3 +27,13 @@ pub fn eat_at_restaurant() {
     // 상대 경로
     front_of_house::hosting::add_to_waitlist();
 }
+
+fn serve_order() {}
+
+mod back_of_house {
+    fn cook_order() {}
+    fn fix_incorrect_order() {
+        cook_order();
+        super::serve_order();
+    }
+}
