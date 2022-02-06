@@ -9,18 +9,7 @@ mod tests {
 
 fn serve_order() {}
 
-mod front_of_house {
-    pub mod hosting {
-        pub fn add_to_waitlist() {}
-        fn seat_at_table() {}
-    }
-
-    mod serving {
-        fn take_order() {}
-        fn serve_order() {}
-        fn take_payment() {}
-    }
-}
+mod front_of_house;
 
 mod back_of_house {
     pub enum Appetizer {
@@ -49,11 +38,23 @@ mod back_of_house {
     }
 }
 
+pub use crate::front_of_house::hosting;
+// 상대 경로
+// use self::front_of_house::hosting;
+
+// 안티 패턴, 관용적이지 않음
+// use self::front_of_house::hosting::add_to_waitlist;
+// add_to_waitlist();
+
 pub fn eat_at_restaurant() {
     // 절대 경로
-    crate::front_of_house::hosting::add_to_waitlist();
-    // // 상대 경로
+    // crate::front_of_house::hosting::add_to_waitlist();
+    // 상대 경로
     // front_of_house::hosting::add_to_waitlist();
+
+    hosting::add_to_waitlist();
+    hosting::add_to_waitlist();
+    hosting::add_to_waitlist();
 
     let mut meal = back_of_house::Breakfast::summer("플랫브레드");
     meal.toast = String::from("화이트");
