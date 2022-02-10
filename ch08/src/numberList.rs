@@ -9,6 +9,7 @@ fn main() {
 	// let list: Vec<i32> = Vec::new();
 	let mut list = vec![9,1,7,10,1,4,2,3,6,10,2,8,3,6,8,3,5,3,8,9,2];
 	println!("Default: \n{:?}", list);
+	
 	list.sort();
 	println!("Sorted: \n{:?}", list);
 
