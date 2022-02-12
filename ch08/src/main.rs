@@ -7,7 +7,47 @@
 */
 use std::io;
 
-fn main() {
-  // Command: Add, Remove, Edit, Search:Name|Department, Order:Asc|Desc, Print, Exit
+// fn checkInput(value, typeCase) {
+//   let value: u32 = match value.trim().parse() {
+//     Ok(num) => num,
+//     Err(_) => continue,
+//   };
+//   value
+// }
 
+fn parse_command(command: &str) {
+  match command {
+    "ADD" => println!("사원 등록 절차 진행"),
+    "REMOVE" => println!("사원 삭제 절차 진행"),
+    "EDIT" => println!("사원 삭제 절차 진행"),
+    "SEARCH" => println!("사원 삭제 절차 진행 [Name|Depertment]"),
+    "ORDER" => println!("정렬 진행 [Asc|Desc]"),
+    "PRINT" => println!("전체 출력"),
+    _ => println!("유효하지 않은 작업입니다."),
+  }
+}
+
+fn main() {
+  loop {
+    println!("작업 형식 입력");
+    println!("[Add, Remove, Edit, Search, Order, Print, Exit]");
+
+    let mut command = String::new();
+
+    io::stdin().read_line(&mut command)
+        .expect("유효하지 않은 입력입니다.");
+    command.make_ascii_uppercase();
+
+    let command: &str = command.trim();
+
+    println!("{}", command);
+
+    match command {
+      "EXIT" => {
+          println!("프로그램 종료");
+          break;
+      }
+      _ => parse_command(&command),
+    }
+  }
 }
