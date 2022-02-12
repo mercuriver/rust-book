@@ -7,17 +7,23 @@
 */
 use std::io;
 
-// fn checkInput(value, typeCase) {
-//   let value: u32 = match value.trim().parse() {
-//     Ok(num) => num,
-//     Err(_) => continue,
-//   };
-//   value
-// }
+fn trim_input(value: &String) -> &str {
+  value.trim()
+}
 
 fn parse_command(command: &str) {
   match command {
-    "ADD" => println!("사원 등록 절차 진행"),
+    "ADD" => {
+      println!("사원 정보 입력");
+      println!("ex) \"Amir to Sales\"");
+
+      let mut detail = String::new();
+      io::stdin().read_line(&mut detail)
+        .expect("유효하지 않은 입력입니다.");
+
+      let keywords: Vec<&str> = trim_input(&detail).split(' ').collect();
+      println!("{:?}", keywords);
+    },
     "REMOVE" => println!("사원 삭제 절차 진행"),
     "EDIT" => println!("사원 삭제 절차 진행"),
     "SEARCH" => println!("사원 삭제 절차 진행 [Name|Depertment]"),
@@ -38,7 +44,7 @@ fn main() {
         .expect("유효하지 않은 입력입니다.");
     command.make_ascii_uppercase();
 
-    let command: &str = command.trim();
+    let command: &str = trim_input(&command);
 
     println!("{}", command);
 
