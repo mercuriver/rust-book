@@ -10,6 +10,15 @@ impl Rectangle {
     }
 }
 
+pub fn add_two(a: i32) -> i32 {
+    a + 2
+}
+
+pub fn greeting(name: &str) -> String {
+    // format!("Hello {}!", name)
+    format!("Hello!")
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -40,6 +49,21 @@ mod tests {
         };
 
         assert!(!smaller.can_hold(&larger));
+    }
+
+    #[test]
+    fn it_adds_two() {
+        assert_eq!(4, add_two(2));
+    }
+
+    #[test]
+    fn greeting_contains_name() {
+        let result = greeting("carol");
+        assert!(
+            result.contains("carol"),
+            "Greeting 함수의 결과에 이름이 포함되어 있지 않음. 결과값: '{}'",
+            result
+        );
     }
 
     #[test]
