@@ -1,22 +1,17 @@
-#[derive(Debug)]
-struct Rectangle {
-    length: u32,
-    width: u32,
+pub struct Guess {
+    value: u32,
 }
 
-impl Rectangle {
-    fn can_hold(&self, other: &Rectangle) -> bool {
-        self.length > other.length && self.width > other.width
+impl Guess {
+    pub fn new(value: u32) -> Guess {
+        if value < 1 {
+            panic!("값이 1보다 작음. 지정된 값: {}", value)
+        } else if value > 100 {
+            panic!("값이 100보다 큼. 지정된 값: {}", value)
+        }
+
+        Guess { value }
     }
-}
-
-pub fn add_two(a: i32) -> i32 {
-    a + 2
-}
-
-pub fn greeting(name: &str) -> String {
-    // format!("Hello {}!", name)
-    format!("Hello!")
 }
 
 #[cfg(test)]
@@ -24,46 +19,15 @@ mod tests {
     use super::*;
 
     #[test]
-    fn larger_can_hold_smaller() {
-        let larger = Rectangle {
-            length: 8,
-            width: 7,
-        };
-        let smaller = Rectangle {
-            length: 5,
-            width: 1,
-        };
-
-        assert!(larger.can_hold(&smaller));
+    #[should_panic]
+    fn greater_then_100() {
+        Guess::new(101);
     }
 
     #[test]
-    fn smaller_cannot_hold_larger() {
-        let larger = Rectangle {
-            length: 8,
-            width: 7,
-        };
-        let smaller = Rectangle {
-            length: 5,
-            width: 1,
-        };
-
-        assert!(!smaller.can_hold(&larger));
-    }
-
-    #[test]
-    fn it_adds_two() {
-        assert_eq!(4, add_two(2));
-    }
-
-    #[test]
-    fn greeting_contains_name() {
-        let result = greeting("carol");
-        assert!(
-            result.contains("carol"),
-            "Greeting 함수의 결과에 이름이 포함되어 있지 않음. 결과값: '{}'",
-            result
-        );
+    #[should_panic(expected = "값이 100보다 큼.")]
+    fn greater_then_101() {
+        Guess::new(102);
     }
 
     #[test]
