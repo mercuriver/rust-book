@@ -1,5 +1,6 @@
 use std::error::Error;
-use std::fs;
+use std::fs::File;
+use std::io::prelude::*;
 
 pub struct Config {
   pub query: String,
@@ -19,9 +20,13 @@ impl Config {
 }
 
 pub fn run(config: Config) -> Result<(), Box<dyn Error>> {
-  let contents = fs::read_to_string(config.filename)?;
-  println!("파일 내용: \n{}", contents);
+  let mut f = File::open(config.filename)?;
+  let mut contents = String::new();
+  f.read_to_string(&mut contents)?;
 
+  for line in search(&config.query, &contents) {
+    println!("{}", line);
+  }
   Ok(())
 }
 

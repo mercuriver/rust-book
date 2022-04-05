@@ -11,9 +11,6 @@ fn main() {
     process::exit(1);
   });
 
-  println!("검색어: {}", config.query);
-  println!("대상 파일: {}", config.filename);
-
   if let Err(e) = ch12::run(config) {
     println!("애플리케이션 에러: {}", e);
     process::exit(1);
