@@ -8,16 +8,16 @@ fn simulated_expensive_caculation(intensity: u32) -> u32 {
 }
 
 fn generate_workout(intensity: u32, random_numbr: u32) {
+  let expensive_result = simulated_expensive_caculation(intensity);
+
   if intensity < 25 {
-    println!(
-      "팔 굽혀펴기 {}번",
-      simulated_expensive_caculation(intensity)
-    );
+    println!("팔 굽혀펴기 {}번", expensive_result);
+    println!("윗몸 일으키기 {}번", expensive_result);
   } else {
     if random_numbr == 3 {
       println!("수분을 충분히 섭취하세요.");
     } else {
-      println!("달리기 {}분", simulated_expensive_caculation(intensity));
+      println!("달리기 {}분", expensive_result);
     }
   }
 }
