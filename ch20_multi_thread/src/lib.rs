@@ -3,7 +3,7 @@ use std::sync::Arc;
 use std::sync::Mutex;
 use std::thread;
 
-struct Job;
+type Job = Box<dyn FnOnce() + Send + 'static>;
 
 struct Worker {
   id: usize,
@@ -12,8 +12,11 @@ struct Worker {
 
 impl Worker {
   fn new(id: usize, receiver: Arc<Mutex<mpsc::Receiver<Job>>>) -> Worker {
-    let thread = thread::spawn(|| {
-      receiver;
+    let thread = thread::spawn(move || loop {
+      let job = receiver.lock().unwrap().recv().unwrap();
+
+      println!("시작: 작업자 {}", id);
+      job();
     });
     Worker { id, thread }
   }
@@ -52,5 +55,8 @@ impl ThreadPool {
   where
     F: FnOnce() + Send + 'static,
   {
+    let job = Box::new(f);
+
+    self.sender.send(job).unwrap();
   }
 }
