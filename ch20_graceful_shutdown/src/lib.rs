@@ -27,6 +27,7 @@ impl Worker {
         }
         Message::Terminate => {
           println!("종료 메시지 수선: 작업자 {}", id);
+          break;
         }
       }
     });
@@ -60,7 +61,7 @@ impl ThreadPool {
     let mut workers = Vec::with_capacity(size);
 
     for id in 0..size {
-      workers.push(Worker::new(id, Arc::clone(&receiver)))
+      workers.push(Worker::new(id, Arc::clone(&receiver)));
     }
 
     ThreadPool { workers, sender }
