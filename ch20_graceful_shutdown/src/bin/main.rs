@@ -5,19 +5,21 @@ use std::net::TcpStream;
 use std::thread;
 use std::time::Duration;
 
-use ch20_multi_thread::ThreadPool;
+use ch20_graceful_shutdown::ThreadPool;
 
 fn main() {
     let listener = TcpListener::bind("127.0.0.1:7878").unwrap();
     let pool = ThreadPool::new(4);
 
-    for stream in listener.incoming() {
+    for stream in listener.incoming().take(4) {
         let _stream = stream.unwrap();
 
         pool.execute(|| {
             handle_connection(_stream);
         });
     }
+
+    println!("종료: 주 쓰레드");
 }
 
 fn handle_connection(mut stream: TcpStream) {
