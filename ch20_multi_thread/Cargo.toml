@@ -1,5 +1,5 @@
 [package]
-name = "ch20_single_thread"
+name = "ch20_multi_thread"
 version = "0.1.0"
 edition = "2021"
 
